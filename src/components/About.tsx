@@ -69,7 +69,7 @@ export default function About() {
               {highlights.map((item) => (
                 <div
                   key={item.title}
-                  className="p-5 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:border-blue-500/30 transition-all group"
+                  className="p-5 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all group"
                 >
                   <item.icon
                     size={20}

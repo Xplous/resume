@@ -168,13 +168,14 @@ export default function Projects() {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* CardSwap showcase */}
           <AnimatedSection delay={200}>
-            <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/20 p-8" style={{ minHeight: "420px" }}>
-              <div className="flex items-center justify-center" style={{ height: "380px" }}>
+            <div className="relative overflow-hidden rounded-2xl bg-zinc-800 border border-zinc-600 p-6" style={{ minHeight: "480px" }}>
+              <h3 className="text-sm font-medium text-zinc-500 mb-4 text-center">Листайте карточки</h3>
+              <div className="flex items-center justify-center" style={{ height: "420px" }}>
                 <CardSwap
-                  width={340}
-                  height={260}
-                  cardDistance={30}
-                  verticalDistance={35}
+                  width={380}
+                  height={300}
+                  cardDistance={25}
+                  verticalDistance={30}
                   delay={4500}
                   pauseOnHover={true}
                   skewAmount={2}
@@ -195,7 +196,7 @@ export default function Projects() {
             <div className="grid gap-3">
               {projects.map((project, idx) => (
                 <AnimatedSection key={idx} delay={idx * 80}>
-                  <div className="group flex items-center gap-4 p-4 rounded-xl border border-zinc-800 bg-zinc-900/20 hover:border-blue-500/30 hover:bg-zinc-900/40 transition-all cursor-default">
+                  <div className="group flex items-center gap-4 p-4 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all cursor-default">
                     <div
                       className={`w-10 h-10 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}
                     >

@@ -90,7 +90,7 @@ export default function Experience() {
                   {/* Timeline dot */}
                   <div className="absolute left-0 md:left-8 top-1 w-2.5 h-2.5 -translate-x-1/2 rounded-full bg-blue-500 ring-4 ring-zinc-950" />
 
-                  <div className="p-6 rounded-xl border border-zinc-800 bg-zinc-900/20 hover:border-zinc-700 transition-all">
+                  <div className="p-6 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                       <div>
                         <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -141,7 +141,7 @@ export default function Experience() {
 
         {/* Education */}
         <AnimatedSection delay={300}>
-          <div className="mt-16 p-6 rounded-xl border border-zinc-800 bg-zinc-900/20">
+          <div className="mt-16 p-6 rounded-xl card-elevated">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
                 <span className="text-blue-500 text-lg">🎓</span>

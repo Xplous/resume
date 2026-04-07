@@ -70,7 +70,7 @@ export default function Skills() {
         <div className="grid md:grid-cols-2 gap-8">
           {categories.map((cat, ci) => (
             <AnimatedSection key={cat.title} delay={ci * 100}>
-              <div className="p-6 rounded-xl border border-zinc-800 bg-zinc-900/20">
+              <div className="p-6 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all">
                 <h3 className="text-lg font-semibold text-white mb-5">
                   {cat.title}
                 </h3>

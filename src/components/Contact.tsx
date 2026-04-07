@@ -59,7 +59,7 @@ export default function Contact() {
                   href={c.href}
                   target={c.href.startsWith("http") ? "_blank" : undefined}
                   rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="block p-5 rounded-xl border border-zinc-800 bg-zinc-900/20 hover:border-blue-500/30 hover:bg-zinc-900/40 transition-all group"
+                  className="block p-5 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all group"
                 >
                   <c.icon
                     size={20}
@@ -71,7 +71,7 @@ export default function Contact() {
                   </p>
                 </a>
               ) : (
-                <div className="p-5 rounded-xl border border-zinc-800 bg-zinc-900/20">
+                <div className="p-5 rounded-xl bg-zinc-800 border border-zinc-600">
                   <c.icon size={20} className="text-blue-500 mb-3" />
                   <p className="text-xs text-zinc-500 mb-1">{c.label}</p>
                   <p className="text-sm text-white font-medium">{c.value}</p>
