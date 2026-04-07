@@ -165,31 +165,33 @@ export default function Projects() {
           </p>
         </AnimatedSection>
 
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* CardSwap showcase */}
-          <AnimatedSection delay={200} className="flex-shrink-0">
-            <div className="relative w-[420px] h-[380px]">
-              <CardSwap
-                width={380}
-                height={280}
-                cardDistance={45}
-                verticalDistance={50}
-                delay={4500}
-                pauseOnHover={true}
-                skewAmount={3}
-                easing="elastic"
-              >
-                {projects.map((project, idx) => (
-                  <Card key={idx}>
-                    <ProjectCard project={project} />
-                  </Card>
-                ))}
-              </CardSwap>
+          <AnimatedSection delay={200}>
+            <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/20 p-8" style={{ minHeight: "420px" }}>
+              <div className="flex items-center justify-center" style={{ height: "380px" }}>
+                <CardSwap
+                  width={340}
+                  height={260}
+                  cardDistance={30}
+                  verticalDistance={35}
+                  delay={4500}
+                  pauseOnHover={true}
+                  skewAmount={2}
+                  easing="elastic"
+                >
+                  {projects.map((project, idx) => (
+                    <Card key={idx}>
+                      <ProjectCard project={project} />
+                    </Card>
+                  ))}
+                </CardSwap>
+              </div>
             </div>
           </AnimatedSection>
 
           {/* Project grid list */}
-          <div className="flex-1 w-full">
+          <div className="w-full">
             <div className="grid gap-3">
               {projects.map((project, idx) => (
                 <AnimatedSection key={idx} delay={idx * 80}>

@@ -141,7 +141,8 @@ const CardSwap: React.FC<CardSwapProps> = ({
       tlRef.current = tl;
 
       tl.to(elFront, {
-        y: "+=500",
+        y: "+=300",
+        opacity: 0,
         duration: config.durDrop,
         ease: config.ease,
       });
@@ -182,6 +183,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
           x: backSlot.x,
           y: backSlot.y,
           z: backSlot.z,
+          opacity: 1,
           duration: config.durReturn,
           ease: config.ease,
         },
@@ -235,7 +237,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   return (
     <div
       ref={container}
-      className="relative"
+      className="relative overflow-hidden"
       style={{
         width,
         height,
