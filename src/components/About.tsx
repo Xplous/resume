@@ -39,7 +39,7 @@ export default function About() {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-8">
             Fullstack-разработчик с опытом{" "}
-            <span className="gradient-text">2+ года</span>
+            <span className="gradient-text">3+ года</span>
           </h2>
         </AnimatedSection>
 
@@ -47,25 +47,33 @@ export default function About() {
           <AnimatedSection delay={100}>
             <div className="space-y-4 text-zinc-400 leading-relaxed">
               <p>
-                Занимаюсь разработкой корпоративных и клиентских веб-приложений.
-                Работаю со стеком от фронтенда на React/Next.js до бэкенда на
-                Rust и Python, включая настройку инфраструктуры и CI/CD.
+                Начал с JavaScript в 2022 году через{" "}
+                <span className="text-blue-400">The Rolling Scopes School</span>,
+                сразу после выпуска (март 2023) взялся за первые коммерческие
+                заказы. На втором курсе ПсковГУ устроился во frontend-стажировку
+                и за полтора года вырос до руководителя frontend-отдела.
               </p>
               <p>
-                Создаю backend-сервисы на Rust (Tokio, Axum) для высоконагруженных
-                компонентов — чат-системы, real-time взаимодействие через WebSocket.
-                Разрабатываю фронтенд с SSR-оптимизацией (Lighthouse 95+).
+                Сейчас занимаюсь разработкой корпоративных и клиентских
+                веб-приложений: фронтенд на React/Next.js, бэкенд на Rust/Axum и
+                Python/FastAPI, инфраструктура на Docker + Nginx + GitLab CI.
+                В феврале 2026 сдал в продакшн «Клуб Подарков» — систему
+                регистрации на мероприятия, где впервые применил Rust в
+                коммерции для PDF-сервиса генерации билетов (многократный рост
+                производительности vs Python).
               </p>
               <p>
-                Студент ПсковГУ, направление 09.03.02 — Информационные системы и
-                технологии. Постоянно развиваюсь, изучаю новые подходы и строю
-                собственные продукты.
+                В 2026 году — <span className="text-blue-400">призёр Робошколы ИТМО × СБЕР</span>{" "}
+                и <span className="text-blue-400">2 место первого тура
+                Международной олимпиады «1С:Предприятие»</span>. Выпускаюсь из
+                ПсковГУ (09.03.02 ИСТ) и планирую поступление в магистратуру
+                ИТМО.
               </p>
             </div>
           </AnimatedSection>
 
           <AnimatedSection delay={200}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {highlights.map((item) => (
                 <div
                   key={item.title}

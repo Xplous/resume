@@ -5,6 +5,7 @@ import { Github, Mail, MapPin, ArrowDown } from "lucide-react";
 
 const roles = [
   "Fullstack-разработчик",
+  "Rust Engineer",
   "Backend Engineer",
   "Frontend Developer",
   "DevOps Enthusiast",
@@ -78,11 +79,11 @@ export default function Hero() {
           <span className="w-1 h-1 bg-zinc-700 rounded-full" />
           <span>21 год</span>
           <span className="w-1 h-1 bg-zinc-700 rounded-full" />
-          <span>2+ года опыта</span>
+          <span>3+ года опыта</span>
         </div>
 
         {/* CTA */}
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
           <a
             href="#projects"
             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all hover:shadow-lg hover:shadow-blue-500/20"

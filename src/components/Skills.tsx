@@ -1,54 +1,62 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import OrbitImages from "./OrbitImages";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiVuedotjs,
+  SiTailwindcss,
+  SiJavascript,
+  SiRust,
+  SiPython,
+  SiNodedotjs,
+  SiPhp,
+  SiPostgresql,
+  SiRedis,
+  SiDocker,
+  SiNginx,
+  SiLinux,
+  SiGit,
+} from "react-icons/si";
 
-interface SkillCategory {
-  title: string;
-  skills: { name: string; level: number }[];
-}
-
-const categories: SkillCategory[] = [
-  {
-    title: "Frontend",
-    skills: [
-      { name: "React / Next.js", level: 90 },
-      { name: "TypeScript", level: 88 },
-      { name: "Vue.js / Nuxt", level: 75 },
-      { name: "Tailwind CSS", level: 92 },
-      { name: "JavaScript", level: 90 },
-    ],
-  },
-  {
-    title: "Backend",
-    skills: [
-      { name: "Rust (Axum, Tokio)", level: 80 },
-      { name: "Python (FastAPI, Django)", level: 85 },
-      { name: "Node.js / Express", level: 78 },
-      { name: "PHP (1С-Битрикс)", level: 70 },
-      { name: "REST API / WebSockets", level: 88 },
-    ],
-  },
-  {
-    title: "Базы данных",
-    skills: [
-      { name: "PostgreSQL", level: 85 },
-      { name: "Redis", level: 72 },
-      { name: "SurrealDB", level: 70 },
-      { name: "Qdrant (Vector DB)", level: 68 },
-      { name: "SQL", level: 85 },
-    ],
-  },
-  {
-    title: "DevOps & Инструменты",
-    skills: [
-      { name: "Docker / Docker Compose", level: 85 },
-      { name: "Nginx", level: 80 },
-      { name: "Linux (Ubuntu, Debian)", level: 82 },
-      { name: "Git / GitLab CI", level: 88 },
-      { name: "CI/CD Pipelines", level: 78 },
-    ],
-  },
+const technologies = [
+  { icon: SiReact, name: "React", color: "#61DAFB" },
+  { icon: SiRust, name: "Rust", color: "#DEA584" },
+  { icon: SiTypescript, name: "TypeScript", color: "#3178C6" },
+  { icon: SiPython, name: "Python", color: "#3776AB" },
+  { icon: SiNextdotjs, name: "Next.js", color: "#ffffff" },
+  { icon: SiDocker, name: "Docker", color: "#2496ED" },
+  { icon: SiVuedotjs, name: "Vue.js", color: "#4FC08D" },
+  { icon: SiPostgresql, name: "PostgreSQL", color: "#4169E1" },
+  { icon: SiTailwindcss, name: "Tailwind", color: "#06B6D4" },
+  { icon: SiNodedotjs, name: "Node.js", color: "#339933" },
+  { icon: SiJavascript, name: "JavaScript", color: "#F7DF1E" },
+  { icon: SiRedis, name: "Redis", color: "#DC382D" },
+  { icon: SiPhp, name: "PHP", color: "#777BB4" },
+  { icon: SiNginx, name: "Nginx", color: "#009639" },
+  { icon: SiGit, name: "Git", color: "#F05032" },
+  { icon: SiLinux, name: "Linux", color: "#FCC624" },
 ];
+
+const orbitItems = technologies.map((tech) => {
+  const Icon = tech.icon;
+  return (
+    <div
+      key={tech.name}
+      className="w-full h-full flex flex-col items-center justify-center gap-1.5"
+      title={tech.name}
+    >
+      <div className="w-14 h-14 rounded-xl bg-zinc-800/90 border border-zinc-700 flex items-center justify-center backdrop-blur-sm shadow-lg">
+        <Icon size={30} color={tech.color} />
+      </div>
+      <span className="text-[11px] text-zinc-400 font-medium whitespace-nowrap">
+        {tech.name}
+      </span>
+    </div>
+  );
+});
 
 export default function Skills() {
   return (
@@ -67,35 +75,58 @@ export default function Skills() {
           </h2>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {categories.map((cat, ci) => (
-            <AnimatedSection key={cat.title} delay={ci * 100}>
-              <div className="p-6 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all">
-                <h3 className="text-lg font-semibold text-white mb-5">
-                  {cat.title}
-                </h3>
-                <div className="space-y-4">
-                  {cat.skills.map((skill) => (
-                    <div key={skill.name}>
-                      <div className="flex justify-between text-sm mb-1.5">
-                        <span className="text-zinc-300">{skill.name}</span>
-                        <span className="text-zinc-500 font-mono text-xs">
-                          {skill.level}%
-                        </span>
-                      </div>
-                      <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full transition-all duration-1000"
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
+        <AnimatedSection delay={200}>
+          <div className="w-full max-w-2xl mx-auto overflow-hidden sm:overflow-visible sm:max-w-5xl">
+            {/* Mobile: smaller orbit */}
+            <div className="block sm:hidden">
+              <OrbitImages
+                items={orbitItems}
+                shape="ellipse"
+                radiusX={180}
+                radiusY={70}
+                baseWidth={400}
+                rotation={-8}
+                duration={30}
+                itemSize={60}
+                fill
+                responsive
+                showPath
+                pathColor="rgba(63, 63, 70, 0.3)"
+                pathWidth={1}
+                centerContent={
+                  <div className="text-center">
+                    <div className="text-3xl font-bold gradient-text">16+</div>
+                    <div className="text-xs text-zinc-500 mt-1">технологий</div>
+                  </div>
+                }
+              />
+            </div>
+            {/* Desktop: full orbit */}
+            <div className="hidden sm:block">
+              <OrbitImages
+                items={orbitItems}
+                shape="ellipse"
+                radiusX={510}
+                radiusY={140}
+                baseWidth={800}
+                rotation={-8}
+                duration={30}
+                itemSize={80}
+                fill
+                responsive
+                showPath
+                pathColor="rgba(63, 63, 70, 0.3)"
+                pathWidth={1}
+                centerContent={
+                  <div className="text-center">
+                    <div className="text-4xl font-bold gradient-text">16+</div>
+                    <div className="text-sm text-zinc-500 mt-1">технологий</div>
+                  </div>
+                }
+              />
+            </div>
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );

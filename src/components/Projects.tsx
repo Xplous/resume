@@ -1,10 +1,22 @@
 "use client";
 
+import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
 import CardSwap, { Card } from "./CardSwap";
-import { ExternalLink, Github, Cpu, Globe, MessageSquare, Gamepad2, BarChart3 } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 
 const projects = [
+  {
+    title: "Клуб Подарков",
+    subtitle: "Платформа регистрации на мероприятия",
+    description:
+      "Production-платформа для регистрации на корпоративные мероприятия с автоматической генерацией билетов и бейджей. Отдельный Rust-микросервис для PDF генерации с QR-кодами и штрихкодами — мой первый коммерческий Rust-проект с многократным ростом производительности vs Python. Сдан в продакшн в феврале 2026.",
+    stack: ["Next.js 16", "NestJS", "Rust", "PostgreSQL", "Redis", "BullMQ", "Bitrix24"],
+    url: "https://ticket.giftclub.pro",
+    github: null,
+    iconImage: "/club.ico",
+    screenshot: "/projects/giftbox.png",
+  },
   {
     title: "Hybrid AI",
     subtitle: "Корпоративный ИИ-помощник",
@@ -13,8 +25,8 @@ const projects = [
     stack: ["Rust", "Axum", "Next.js 15", "SurrealDB", "Qdrant", "TypeScript"],
     url: "https://hybrid-ai.ru",
     github: null,
-    icon: Cpu,
-    color: "from-blue-600 to-cyan-500",
+    iconImage: "/projects/icon-hybrid-ai.png",
+    screenshot: "/projects/hybrid-ai.png",
   },
   {
     title: "Солнечный Бор",
@@ -24,8 +36,8 @@ const projects = [
     stack: ["Next.js", "React", "1С-Битрикс", "PHP", "PostgreSQL"],
     url: "https://bazasolnychny.ru",
     github: null,
-    icon: Globe,
-    color: "from-green-600 to-emerald-500",
+    iconImage: "/projects/icon-solnechny-bor.ico",
+    screenshot: "/projects/solnechny-bor.png",
   },
   {
     title: "Школа Первых",
@@ -35,114 +47,10 @@ const projects = [
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Node.js"],
     url: "https://school-firsts.ru",
     github: null,
-    icon: BarChart3,
-    color: "from-indigo-600 to-violet-500",
-  },
-  {
-    title: "IwaterCRM",
-    subtitle: "CRM-система для бизнеса",
-    description:
-      "Полноценная CRM для управления клиентами и продажами. SSR на Next.js с Lighthouse 95+, REST API на FastAPI, Clean Architecture, JWT Auth, WebSockets для real-time.",
-    stack: ["Next.js", "FastAPI", "PostgreSQL", "Docker", "Nginx", "WebSockets"],
-    url: null,
-    github: null,
-    icon: MessageSquare,
-    color: "from-purple-600 to-pink-500",
-  },
-  {
-    title: "VK Bot",
-    subtitle: "Бот для ВКонтакте",
-    description:
-      "Многофункциональный бот с SQLite-хранилищем, обработкой команд, модульной архитектурой. Автоматизация взаимодействия в сообществах ВК.",
-    stack: ["TypeScript", "Node.js", "SQLite", "VK API"],
-    url: null,
-    github: "https://github.com/Xplous/vk-bot",
-    icon: MessageSquare,
-    color: "from-sky-600 to-blue-500",
-  },
-  {
-    title: "Match Tracker",
-    subtitle: "Трекер матчей",
-    description:
-      "Real-time отслеживание спортивных матчей с обновлением данных. Современный интерфейс на Next.js с TypeScript.",
-    stack: ["Next.js", "TypeScript", "React", "API"],
-    url: null,
-    github: "https://github.com/Xplous/match-tracker-test",
-    icon: Gamepad2,
-    color: "from-orange-600 to-amber-500",
+    iconImage: "/projects/icon-school-firsts.webp",
+    screenshot: "/projects/school-firsts.png",
   },
 ];
-
-function ProjectCard({
-  project,
-}: {
-  project: (typeof projects)[number];
-}) {
-  const Icon = project.icon;
-  return (
-    <div className="h-full p-5 flex flex-col justify-between">
-      <div>
-        <div className="flex items-center gap-3 mb-3">
-          <div
-            className={`w-9 h-9 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center`}
-          >
-            <Icon size={18} className="text-white" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-white leading-tight">
-              {project.title}
-            </h3>
-            <p className="text-xs text-zinc-500">{project.subtitle}</p>
-          </div>
-        </div>
-        <p className="text-xs text-zinc-400 leading-relaxed mb-3 line-clamp-3">
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-1">
-          {project.stack.slice(0, 4).map((t) => (
-            <span
-              key={t}
-              className="px-1.5 py-0.5 text-[10px] bg-zinc-800 text-zinc-400 rounded"
-            >
-              {t}
-            </span>
-          ))}
-          {project.stack.length > 4 && (
-            <span className="px-1.5 py-0.5 text-[10px] bg-zinc-800 text-zinc-500 rounded">
-              +{project.stack.length - 4}
-            </span>
-          )}
-        </div>
-      </div>
-      <div className="flex gap-2 mt-3 pt-3 border-t border-zinc-800">
-        {project.url && (
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ExternalLink size={12} />
-            Открыть
-          </a>
-        )}
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Github size={12} />
-            Код
-          </a>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export default function Projects() {
   return (
@@ -165,25 +73,50 @@ export default function Projects() {
           </p>
         </AnimatedSection>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* CardSwap showcase */}
           <AnimatedSection delay={200}>
-            <div className="relative overflow-hidden rounded-2xl bg-zinc-800 border border-zinc-600 p-6" style={{ minHeight: "480px" }}>
-              <h3 className="text-sm font-medium text-zinc-500 mb-4 text-center">Листайте карточки</h3>
-              <div className="flex items-center justify-center" style={{ height: "420px" }}>
+            <div className="relative overflow-hidden rounded-2xl">
+              <div className="flex items-center justify-center scale-90 sm:scale-100 md:scale-125 origin-center" style={{ height: "380px" }}>
                 <CardSwap
-                  width={380}
-                  height={300}
-                  cardDistance={25}
-                  verticalDistance={30}
+                  width={280}
+                  height={220}
+                  cardDistance={20}
+                  verticalDistance={25}
                   delay={4500}
                   pauseOnHover={true}
                   skewAmount={2}
                   easing="elastic"
                 >
-                  {projects.map((project, idx) => (
+                  {projects.filter((p) => p.screenshot).map((project, idx) => (
                     <Card key={idx}>
-                      <ProjectCard project={project} />
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={project.screenshot!}
+                          alt={project.title}
+                          fill
+                          className="object-cover object-top"
+                          sizes="500px"
+                          quality={100}
+                          unoptimized
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 pt-10">
+                          <h3 className="text-sm font-bold text-white">{project.title}</h3>
+                          <p className="text-xs text-zinc-400">{project.subtitle}</p>
+                          {project.url && (
+                            <a
+                              href={project.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 mt-2 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <ExternalLink size={11} />
+                              {project.url.replace("https://", "")}
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </Card>
                   ))}
                 </CardSwap>
@@ -192,23 +125,28 @@ export default function Projects() {
           </AnimatedSection>
 
           {/* Project grid list */}
-          <div className="w-full">
+          <div className="w-full min-w-0">
             <div className="grid gap-3">
               {projects.map((project, idx) => (
                 <AnimatedSection key={idx} delay={idx * 80}>
-                  <div className="group flex items-center gap-4 p-4 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all cursor-default">
-                    <div
-                      className={`w-10 h-10 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}
-                    >
-                      <project.icon size={18} className="text-white" />
+                  <div className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-zinc-800 border border-zinc-600 hover:border-blue-500 transition-all cursor-default overflow-hidden">
+                    <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 group-hover:scale-110 transition-transform">
+                      <Image
+                        src={project.iconImage}
+                        alt={project.title}
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover"
+                        unoptimized
+                      />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-semibold text-white truncate">
+                    <div className="flex-1 min-w-0 overflow-hidden">
+                      <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                        <h4 className="text-sm font-semibold text-white truncate shrink-0">
                           {project.title}
                         </h4>
-                        <span className="text-xs text-zinc-600">—</span>
-                        <span className="text-xs text-zinc-500 truncate">
+                        <span className="text-xs text-zinc-600 shrink-0 hidden sm:inline">—</span>
+                        <span className="text-xs text-zinc-500 truncate hidden sm:inline">
                           {project.subtitle}
                         </span>
                       </div>

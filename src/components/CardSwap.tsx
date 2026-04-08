@@ -237,7 +237,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   return (
     <div
       ref={container}
-      className="relative overflow-hidden"
+      className="relative"
       style={{
         width,
         height,
