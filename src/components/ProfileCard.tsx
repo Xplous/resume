@@ -43,10 +43,18 @@ if (typeof document !== 'undefined') {
          properties: without an explicit -webkit-mask-mode, the prefixed
          mask-image defaults to alpha mode, which treats the SVG's full
          black backing rect as opaque and floods the entire card with shine.
-         The unprefixed mask-mode in the inline style is honored by Chromium
-         but ignored by WebKit in that legacy path, so we set both here. */
+         Chromium honors the unprefixed mask-mode from the inline style,
+         but WebKit ignores it in that legacy path — it needs the prefixed
+         property set directly. csstype (React.CSSProperties) does not
+         include -webkit-mask-mode so we cannot set it inline via React;
+         this stylesheet rule is the only working delivery path. All four
+         prefixed mask longhands are repeated here to ensure Safari locks
+         onto a consistent -webkit-mask-* declaration chain with luminance. */
       .pc-shine {
+        -webkit-mask-image: var(--icon) !important;
         -webkit-mask-mode: luminance !important;
+        -webkit-mask-repeat: repeat !important;
+        -webkit-mask-size: 120% !important;
         mask-mode: luminance !important;
       }
       /* iOS: force white text, no gradient, no luminosity blend.
@@ -312,12 +320,10 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     maskSize: '120%',
     maskPosition: 'top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x))',
     WebkitMaskImage: 'var(--icon)',
-    // Critical for iOS Safari: without an explicit -webkit-mask-mode the
-    // prefixed mask-image defaults to alpha mode, which treats the SVG's
-    // full black rect as opaque and floods the whole card with the shine
-    // layer (instead of clipping to the white icon glyphs). Chromium honors
-    // the unprefixed mask-mode above, but WebKit needs the prefixed form.
-    WebkitMaskMode: 'luminance',
+    // NOTE: -webkit-mask-mode is NOT settable here — csstype (React.CSSProperties)
+    // does not include it, TypeScript rejects the property. The prefixed
+    // mask-mode is forced via CSS in the injected <style id="pc-keyframes">
+    // block below instead; see the .pc-shine rule.
     WebkitMaskRepeat: 'repeat',
     WebkitMaskSize: '120%',
     filter: 'brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5)',
