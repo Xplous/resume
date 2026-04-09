@@ -57,30 +57,34 @@ if (typeof document !== 'undefined') {
         color: rgba(255, 255, 255, 0.85) !important;
         -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
       }
-      /* iOS: replace shine layer background with smooth, non-repeating gradients.
-         The original shineStyle uses repeating-linear-gradient(-45deg,...) with
-         very tight color stops (3.8%, 4.5%, 5.2%, 10%, 12%) combined with
-         mix-blend-mode:color-dodge and a luminance mask — on WebKit this produces
-         visible diagonal banding. Chromium sub-pixel-smooths it away, iOS does not.
-         We keep the mask (icon pattern) and overall holographic feel, but use
-         non-repeating gradients so there are no sharp stops left to band. */
+      /* iOS: replace ONLY the repeating-linear-gradients with smooth non-repeating
+         versions — the original shineStyle depends on color-dodge blending a mostly
+         dark base (#0e152e) with bright rainbow accents, clipped by a luminance
+         mask to the icon SVG. We keep that structure (rainbow layer on top, dark
+         base in middle, pointer radial at bottom) so color-dodge still lets only
+         the bright icon-shaped regions show through. The only problem on WebKit
+         was the diagonal banding from repeating-linear-gradient(-45deg,...) with
+         tight 3.8/4.5/5.2/10/12% stops and, secondarily, the horizontal repeat
+         from the 0deg rainbow. Replacing both with non-repeating linear-gradients
+         eliminates banding while preserving the holographic icon pattern.
+         mix-blend-mode, animation, filter and mask stay at their inline defaults. */
       html.is-ios .pc-shine {
         background-image:
-          linear-gradient(135deg,
-            hsl(200, 100%, 75%) 0%,
-            hsl(240, 85%, 72%) 25%,
-            hsl(280, 80%, 72%) 50%,
-            hsl(320, 80%, 72%) 75%,
-            hsl(200, 100%, 75%) 100%),
+          linear-gradient(180deg,
+            var(--sunpillar-clr-1) 0%,
+            var(--sunpillar-clr-2) 20%,
+            var(--sunpillar-clr-3) 40%,
+            var(--sunpillar-clr-4) 60%,
+            var(--sunpillar-clr-5) 80%,
+            var(--sunpillar-clr-6) 100%),
+          linear-gradient(-45deg,
+            #0e152e 0%,
+            hsl(180, 20%, 38%) 50%,
+            #0e152e 100%),
           radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-            hsla(210, 100%, 60%, 0.28) 12%,
-            hsla(270, 60%, 40%, 0.22) 60%,
-            hsla(0, 0%, 0%, 0.5) 120%) !important;
-        background-size: cover, cover !important;
-        background-position: center, center !important;
-        mix-blend-mode: screen !important;
-        animation: none !important;
-        filter: brightness(1.1) contrast(1) saturate(1.15) opacity(0.75) !important;
+            hsla(0, 0%, 0%, 0.1) 12%,
+            hsla(0, 0%, 0%, 0.15) 20%,
+            hsla(0, 0%, 0%, 0.25) 120%) !important;
       }
       /* iOS: soften glare layer — overlay blend on iOS can accentuate contrast
          from the radial gradient; soft-light keeps the lighting cue without
