@@ -57,6 +57,20 @@ if (typeof document !== 'undefined') {
         color: rgba(255, 255, 255, 0.85) !important;
         -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
       }
+      /* iOS: hide holographic shine layer — WebKit renders visible diagonal
+         banding from the repeating-linear-gradient(-45deg,...) combined with
+         mix-blend-mode:color-dodge and the masked background. Chromium handles
+         it fine, but on iPhone it produces harsh stripes on the card. */
+      html.is-ios .pc-shine {
+        display: none !important;
+      }
+      /* iOS: soften glare layer as well — overlay blend on iOS can accentuate
+         banding from the radial gradient at high contrast. */
+      html.is-ios .pc-glare {
+        mix-blend-mode: soft-light !important;
+        filter: brightness(1) contrast(1) !important;
+        opacity: 0.6 !important;
+      }
     `;
     document.head.appendChild(style);
   }
@@ -368,8 +382,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
             className="absolute inset-0"
             style={{ backgroundImage: 'var(--inner-gradient)', backgroundColor: 'rgba(0,0,0,0.9)', borderRadius: cardRadius, display: 'grid', gridArea: '1 / -1' }}
           >
-            <div style={shineStyle} />
-            <div style={glareStyle} />
+            <div className="pc-shine" style={shineStyle} />
+            <div className="pc-glare" style={glareStyle} />
 
             {/* Avatar */}
             <div className="overflow-visible" style={{ transform: 'translateZ(2px)', gridArea: '1 / -1', borderRadius: cardRadius, pointerEvents: 'none', backfaceVisibility: 'hidden' }}>
