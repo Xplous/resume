@@ -38,6 +38,17 @@ if (typeof document !== 'undefined') {
         0% { background-position: 0 var(--background-y), 0 0, center; }
         100% { background-position: 0 var(--background-y), 90% 90%, center; }
       }
+      /* Force luminance mode for the shine mask across all engines.
+         WebKit (Safari/iOS) treats -webkit-mask-* and mask-* as separate
+         properties: without an explicit -webkit-mask-mode, the prefixed
+         mask-image defaults to alpha mode, which treats the SVG's full
+         black backing rect as opaque and floods the entire card with shine.
+         The unprefixed mask-mode in the inline style is honored by Chromium
+         but ignored by WebKit in that legacy path, so we set both here. */
+      .pc-shine {
+        -webkit-mask-mode: luminance !important;
+        mask-mode: luminance !important;
+      }
       /* iOS: force white text, no gradient, no luminosity blend.
          Applied when html has .is-ios class (set at module load, before React render). */
       html.is-ios .pc-name-wrap {
@@ -57,51 +68,16 @@ if (typeof document !== 'undefined') {
         color: rgba(255, 255, 255, 0.85) !important;
         -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
       }
-      /* iOS: replace ONLY the repeating-linear-gradients with smooth non-repeating
-         versions — the original shineStyle depends on color-dodge blending a mostly
-         dark base (#0e152e) with bright rainbow accents, clipped by a luminance
-         mask to the icon SVG. We keep that structure (rainbow layer on top, dark
-         base in middle, pointer radial at bottom) so color-dodge still lets only
-         the bright icon-shaped regions show through. The only problem on WebKit
-         was the diagonal banding from repeating-linear-gradient(-45deg,...) with
-         tight 3.8/4.5/5.2/10/12% stops and, secondarily, the horizontal repeat
-         from the 0deg rainbow. Replacing both with non-repeating linear-gradients
-         eliminates banding while preserving the holographic icon pattern.
-         mix-blend-mode, animation, filter and mask stay at their inline defaults. */
-      html.is-ios .pc-shine {
-        background-image:
-          linear-gradient(180deg,
-            hsl(2, 100%, 60%) 0%,
-            hsl(53, 100%, 60%) 20%,
-            hsl(93, 100%, 60%) 40%,
-            hsl(176, 100%, 60%) 60%,
-            hsl(228, 100%, 60%) 80%,
-            hsl(283, 100%, 60%) 100%),
-          linear-gradient(-45deg,
-            #0e152e 0%,
-            hsl(180, 35%, 42%) 50%,
-            #0e152e 100%),
-          radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-            hsla(0, 0%, 0%, 0.1) 12%,
-            hsla(0, 0%, 0%, 0.15) 20%,
-            hsla(0, 0%, 0%, 0.25) 120%) !important;
-        /* Override the inline filter: original values (brightness 0.66,
-           saturate 0.33, opacity 0.5) were tuned for the repeating gradient
-           whose bright color peaks survived dimming. A smooth linear-gradient
-           averages its colors out, so after the original filter it produces
-           no visible icon-mask highlights under color-dodge. Relax brightness,
-           saturation and opacity so the smooth gradient carries enough energy
-           to light up the icon pattern the same way repeating peaks would. */
-        filter: brightness(0.95) contrast(1.25) saturate(0.9) opacity(0.8) !important;
-      }
-      /* iOS: soften glare layer — overlay blend on iOS can accentuate contrast
-         from the radial gradient; soft-light keeps the lighting cue without
-         harsh highlights. */
-      html.is-ios .pc-glare {
-        mix-blend-mode: soft-light !important;
-        filter: brightness(1) contrast(1) !important;
-        opacity: 0.55 !important;
-      }
+      /* No iOS-specific overrides needed for .pc-shine / .pc-glare:
+         the root cause of the earlier "diagonal banding" on iPhone was NOT
+         the repeating gradients — it was that -webkit-mask-image on Safari
+         defaulted to alpha mode (instead of luminance), so the SVG's black
+         backing rect became a fully-opaque mask and the shine layer was
+         rendered across the ENTIRE card without any icon clipping, making
+         the -45deg stripe pattern look like huge card-wide bands. With
+         WebkitMaskMode: 'luminance' added to shineStyle above, the mask now
+         clips correctly to just the white icon glyphs on iOS, matching
+         desktop Chromium behavior — no stripe banding, icon pattern visible. */
     `;
     document.head.appendChild(style);
   }
@@ -336,6 +312,12 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     maskSize: '120%',
     maskPosition: 'top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x))',
     WebkitMaskImage: 'var(--icon)',
+    // Critical for iOS Safari: without an explicit -webkit-mask-mode the
+    // prefixed mask-image defaults to alpha mode, which treats the SVG's
+    // full black rect as opaque and floods the whole card with the shine
+    // layer (instead of clipping to the white icon glyphs). Chromium honors
+    // the unprefixed mask-mode above, but WebKit needs the prefixed form.
+    WebkitMaskMode: 'luminance',
     WebkitMaskRepeat: 'repeat',
     WebkitMaskSize: '120%',
     filter: 'brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5)',
