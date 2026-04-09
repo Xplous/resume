@@ -73,7 +73,7 @@ export default function Projects() {
           </p>
         </AnimatedSection>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* CardSwap showcase */}
           <AnimatedSection delay={200}>
             <div className="relative overflow-hidden rounded-2xl">

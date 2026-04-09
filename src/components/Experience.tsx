@@ -213,7 +213,7 @@ export default function Experience() {
 
         {/* Education */}
         <AnimatedSection delay={300}>
-          <div className="mt-16 grid md:grid-cols-2 gap-3">
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-3">
             <a
               href="https://pskgu.ru/"
               target="_blank"
@@ -277,7 +277,7 @@ export default function Experience() {
               Достижения и сертификаты
             </span>
           </div>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {achievements.map((item, idx) => (
               <a
                 key={idx}

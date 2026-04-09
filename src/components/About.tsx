@@ -43,7 +43,7 @@ export default function About() {
           </h2>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <AnimatedSection delay={100}>
             <div className="space-y-4 text-zinc-400 leading-relaxed">
               <p>
