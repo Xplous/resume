@@ -436,11 +436,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
             <div className="pc-name-wrap max-h-full overflow-hidden text-center relative z-[5] mix-blend-luminosity"
               style={{ transform: 'translate3d(calc(var(--pointer-from-left) * -6px + 3px), calc(var(--pointer-from-top) * -6px + 3px), 0.1px)', gridArea: '1 / -1', borderRadius: cardRadius, pointerEvents: 'none' }}>
               <div className="w-full absolute flex flex-col top-[1.2em] sm:top-[3em]">
-                <h3 className="pc-name-text font-semibold m-0 whitespace-nowrap text-[clamp(16px,5vw,20px)] sm:text-[clamp(22px,3.5svh,28px)]"
+                <h3 className="pc-name-text font-semibold m-0 whitespace-nowrap"
                   style={{ backgroundImage: 'linear-gradient(to bottom, #fff, #6f6fbe)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '1em 1.5em' }}>
                   {name}
                 </h3>
-                <p className="pc-title-text font-semibold whitespace-nowrap mx-auto w-min relative -top-[4px] sm:-top-[12px] text-[14px] sm:text-[16px]"
+                <p className="pc-title-text font-semibold whitespace-nowrap mx-auto w-min relative -top-[4px] sm:-top-[12px]"
                   style={{ backgroundImage: 'linear-gradient(to bottom, #fff, #4a4ac0)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '1em 1.5em' }}>
                   {title}
                 </p>

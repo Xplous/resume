@@ -17,6 +17,25 @@ body {
   overflow-x: hidden;
 }
 
+/* ProfileCard name sizing — explicit rules, bypass Tailwind arbitrary-value
+   escaping which can break in WebKit after turbopack minification. */
+.pc-name-text {
+  font-size: clamp(16px, 5vw, 20px);
+}
+@media (min-width: 640px) {
+  .pc-name-text {
+    font-size: clamp(22px, 3.5svh, 28px);
+  }
+}
+.pc-title-text {
+  font-size: clamp(11px, 3.2vw, 13px);
+}
+@media (min-width: 640px) {
+  .pc-title-text {
+    font-size: clamp(14px, 2svh, 16px);
+  }
+}
+
 ::selection {
   background: rgba(59, 130, 246, 0.3);
   color: #fff;
