@@ -71,20 +71,28 @@ if (typeof document !== 'undefined') {
       html.is-ios .pc-shine {
         background-image:
           linear-gradient(180deg,
-            var(--sunpillar-clr-1) 0%,
-            var(--sunpillar-clr-2) 20%,
-            var(--sunpillar-clr-3) 40%,
-            var(--sunpillar-clr-4) 60%,
-            var(--sunpillar-clr-5) 80%,
-            var(--sunpillar-clr-6) 100%),
+            hsl(2, 100%, 60%) 0%,
+            hsl(53, 100%, 60%) 20%,
+            hsl(93, 100%, 60%) 40%,
+            hsl(176, 100%, 60%) 60%,
+            hsl(228, 100%, 60%) 80%,
+            hsl(283, 100%, 60%) 100%),
           linear-gradient(-45deg,
             #0e152e 0%,
-            hsl(180, 20%, 38%) 50%,
+            hsl(180, 35%, 42%) 50%,
             #0e152e 100%),
           radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
             hsla(0, 0%, 0%, 0.1) 12%,
             hsla(0, 0%, 0%, 0.15) 20%,
             hsla(0, 0%, 0%, 0.25) 120%) !important;
+        /* Override the inline filter: original values (brightness 0.66,
+           saturate 0.33, opacity 0.5) were tuned for the repeating gradient
+           whose bright color peaks survived dimming. A smooth linear-gradient
+           averages its colors out, so after the original filter it produces
+           no visible icon-mask highlights under color-dodge. Relax brightness,
+           saturation and opacity so the smooth gradient carries enough energy
+           to light up the icon pattern the same way repeating peaks would. */
+        filter: brightness(0.95) contrast(1.25) saturate(0.9) opacity(0.8) !important;
       }
       /* iOS: soften glare layer — overlay blend on iOS can accentuate contrast
          from the radial gradient; soft-light keeps the lighting cue without
