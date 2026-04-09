@@ -57,19 +57,38 @@ if (typeof document !== 'undefined') {
         color: rgba(255, 255, 255, 0.85) !important;
         -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
       }
-      /* iOS: hide holographic shine layer — WebKit renders visible diagonal
-         banding from the repeating-linear-gradient(-45deg,...) combined with
-         mix-blend-mode:color-dodge and the masked background. Chromium handles
-         it fine, but on iPhone it produces harsh stripes on the card. */
+      /* iOS: replace shine layer background with smooth, non-repeating gradients.
+         The original shineStyle uses repeating-linear-gradient(-45deg,...) with
+         very tight color stops (3.8%, 4.5%, 5.2%, 10%, 12%) combined with
+         mix-blend-mode:color-dodge and a luminance mask — on WebKit this produces
+         visible diagonal banding. Chromium sub-pixel-smooths it away, iOS does not.
+         We keep the mask (icon pattern) and overall holographic feel, but use
+         non-repeating gradients so there are no sharp stops left to band. */
       html.is-ios .pc-shine {
-        display: none !important;
+        background-image:
+          linear-gradient(135deg,
+            hsl(200, 100%, 75%) 0%,
+            hsl(240, 85%, 72%) 25%,
+            hsl(280, 80%, 72%) 50%,
+            hsl(320, 80%, 72%) 75%,
+            hsl(200, 100%, 75%) 100%),
+          radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+            hsla(210, 100%, 60%, 0.28) 12%,
+            hsla(270, 60%, 40%, 0.22) 60%,
+            hsla(0, 0%, 0%, 0.5) 120%) !important;
+        background-size: cover, cover !important;
+        background-position: center, center !important;
+        mix-blend-mode: screen !important;
+        animation: none !important;
+        filter: brightness(1.1) contrast(1) saturate(1.15) opacity(0.75) !important;
       }
-      /* iOS: soften glare layer as well — overlay blend on iOS can accentuate
-         banding from the radial gradient at high contrast. */
+      /* iOS: soften glare layer — overlay blend on iOS can accentuate contrast
+         from the radial gradient; soft-light keeps the lighting cue without
+         harsh highlights. */
       html.is-ios .pc-glare {
         mix-blend-mode: soft-light !important;
         filter: brightness(1) contrast(1) !important;
-        opacity: 0.6 !important;
+        opacity: 0.55 !important;
       }
     `;
     document.head.appendChild(style);
