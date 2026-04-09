@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
-  <rect width="400" height="400" fill="black"/>
+  <!-- No backing rect: in luminance-mode masks transparent areas already
+       evaluate to "hidden", and removing the rect also makes this SVG safe
+       to consume in alpha-mode masks (e.g. WebKit's legacy -webkit-mask
+       path), where a black opaque rect would otherwise flood the layer. -->
   <g fill="white" opacity="0.7">
     <!-- Row 1 -->
     <text x="30" y="40" font-size="18" font-family="monospace">&lt;/&gt;</text>

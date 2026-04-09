@@ -38,25 +38,15 @@ if (typeof document !== 'undefined') {
         0% { background-position: 0 var(--background-y), 0 0, center; }
         100% { background-position: 0 var(--background-y), 90% 90%, center; }
       }
-      /* Force luminance mode for the shine mask across all engines.
-         WebKit (Safari/iOS) treats -webkit-mask-* and mask-* as separate
-         properties: without an explicit -webkit-mask-mode, the prefixed
-         mask-image defaults to alpha mode, which treats the SVG's full
-         black backing rect as opaque and floods the entire card with shine.
-         Chromium honors the unprefixed mask-mode from the inline style,
-         but WebKit ignores it in that legacy path — it needs the prefixed
-         property set directly. csstype (React.CSSProperties) does not
-         include -webkit-mask-mode so we cannot set it inline via React;
-         this stylesheet rule is the only working delivery path. All four
-         prefixed mask longhands are repeated here to ensure Safari locks
-         onto a consistent -webkit-mask-* declaration chain with luminance. */
-      .pc-shine {
-        -webkit-mask-image: var(--icon) !important;
-        -webkit-mask-mode: luminance !important;
-        -webkit-mask-repeat: repeat !important;
-        -webkit-mask-size: 120% !important;
-        mask-mode: luminance !important;
-      }
+      /* No mask overrides needed: shineStyle ships mask-image/mask-mode
+         (unprefixed only) which Safari 15.4+ supports natively in luminance
+         mode, matching the React Bits original. The previous CSS block here
+         tried to force -webkit-mask-mode: luminance because we had also
+         set WebkitMaskImage inline — that combination put Safari onto its
+         legacy mask path which has no equivalent for mask-mode. With the
+         WebKit prefixes removed from shineStyle, the unprefixed path is
+         used and mask-mode: luminance applies correctly on every browser
+         we care about. */
       /* iOS: force white text, no gradient, no luminosity blend.
          Applied when html has .is-ios class (set at module load, before React render). */
       html.is-ios .pc-name-wrap {
@@ -314,18 +304,26 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   }), [iconUrl, innerGradient, behindGlowColor, behindGlowSize]);
 
   const shineStyle: React.CSSProperties = {
+    // CRITICAL: Use ONLY unprefixed mask-* properties.
+    //
+    // The original React Bits ProfileCard ships ONLY mask-image / mask-mode
+    // (unprefixed) — and works on iOS Safari. Adding -webkit-mask-image
+    // (which a previous edit to this file did) flips Safari into the legacy
+    // -webkit-mask path, which silently IGNORES mask-mode and defaults to
+    // alpha mode. With alpha mode the SVG's black <rect> backing becomes a
+    // fully-opaque mask, the icon clipping is lost, and the entire shine
+    // layer floods the card — that was the source of every "card looks
+    // broken on iPhone" report in this thread.
+    //
+    // iOS 15.4+ (March 2022) and Safari 15.4+ support unprefixed mask
+    // shorthand and longhands natively, including mask-mode: luminance.
+    // The iPhones we care about run iOS 17/18, well past that cut-off, so
+    // dropping the WebKit prefixes is safe and is the actual fix.
     maskImage: 'var(--icon)',
     maskMode: 'luminance',
     maskRepeat: 'repeat',
     maskSize: '120%',
     maskPosition: 'top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x))',
-    WebkitMaskImage: 'var(--icon)',
-    // NOTE: -webkit-mask-mode is NOT settable here — csstype (React.CSSProperties)
-    // does not include it, TypeScript rejects the property. The prefixed
-    // mask-mode is forced via CSS in the injected <style id="pc-keyframes">
-    // block below instead; see the .pc-shine rule.
-    WebkitMaskRepeat: 'repeat',
-    WebkitMaskSize: '120%',
     filter: 'brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5)',
     animation: 'pc-holo-bg 18s linear infinite',
     mixBlendMode: 'color-dodge',
